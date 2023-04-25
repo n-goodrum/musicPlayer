@@ -120,11 +120,10 @@
             this.playlistBox.ForeColor = System.Drawing.Color.Black;
             this.playlistBox.FormattingEnabled = true;
             this.playlistBox.ItemHeight = 12;
-            this.playlistBox.Location = new System.Drawing.Point(12, 48);
+            this.playlistBox.Location = new System.Drawing.Point(12, 60);
             this.playlistBox.Name = "playlistBox";
             this.playlistBox.ScrollAlwaysVisible = true;
-            this.playlistBox.Size = new System.Drawing.Size(568, 352);
-            this.playlistBox.Sorted = true;
+            this.playlistBox.Size = new System.Drawing.Size(568, 340);
             this.playlistBox.TabIndex = 6;
             this.playlistBox.SelectedIndexChanged += new System.EventHandler(this.playlistBox_SelectedIndexChanged);
             // 
@@ -215,11 +214,11 @@
             // selectedList
             // 
             this.selectedList.AutoSize = true;
-            this.selectedList.Font = new System.Drawing.Font("Courant", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectedList.Font = new System.Drawing.Font("Courant", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectedList.ForeColor = System.Drawing.Color.Lime;
-            this.selectedList.Location = new System.Drawing.Point(18, 11);
+            this.selectedList.Location = new System.Drawing.Point(12, 9);
             this.selectedList.Name = "selectedList";
-            this.selectedList.Size = new System.Drawing.Size(156, 28);
+            this.selectedList.Size = new System.Drawing.Size(127, 22);
             this.selectedList.TabIndex = 13;
             this.selectedList.Text = "Playlists";
             // 
@@ -227,9 +226,9 @@
             // 
             this.resetButton.BackColor = System.Drawing.Color.Green;
             this.resetButton.Font = new System.Drawing.Font("Courant", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetButton.Location = new System.Drawing.Point(195, 14);
+            this.resetButton.Location = new System.Drawing.Point(12, 34);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(85, 24);
+            this.resetButton.Size = new System.Drawing.Size(85, 21);
             this.resetButton.TabIndex = 14;
             this.resetButton.Text = "Return";
             this.resetButton.UseVisualStyleBackColor = false;

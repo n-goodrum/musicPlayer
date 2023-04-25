@@ -98,15 +98,16 @@ namespace musicPlayer
 
             if(ofd.ShowDialog() == DialogResult.OK)
             {
+                int tempsize = files.Count;
                 files.AddRange(ofd.FileNames);
-                for(int x =0; x < files.Count; x++)
+                for(int x =tempsize; x < files.Count; x++)
                 {
                     songBox.Items.Add(files[x]);
                 }
-                StreamWriter sw = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllSongs.txt");
-                foreach (var item in files)
+                StreamWriter sw = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllSongs.txt", true);
+                for (int x = tempsize; x < files.Count; x++)
                 {
-                    sw.WriteLine(item);
+                    sw.WriteLine(files[x]);
                     this.Refresh();
                 }
                 sw.Close();
@@ -129,6 +130,7 @@ namespace musicPlayer
             {
                 string tempSong = sr.ReadLine();
                 songsList.Add(tempSong);
+                playlistBox.Items.Add(tempSong);
             }
             sr.Close();
         }
@@ -137,17 +139,22 @@ namespace musicPlayer
         {
             string newPlaylist = Interaction.InputBox("Enter New Playlist Name", "Adding Playlist", "");
             currentList = @"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\" + newPlaylist + ".txt";
-            StreamWriter stream = new StreamWriter(currentList);
+            StreamWriter stream = new StreamWriter(currentList, true);
+            this.Refresh();
             stream.Close();
             playlists.Add(currentList);
             refreshPlaylist(playlists);
+            StreamWriter streamWriter = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt", true);
+            streamWriter.WriteLine(currentList);
+            this.Refresh();
+            streamWriter.Close();
         }
         //adds a song to the current playlist
         private void addList_Click(object sender, EventArgs e)
         {
             if(inPlaylist)
             {
-                System.IO.File.AppendAllText(currentList, player.URL);
+                System.IO.File.AppendAllText(currentList, player.URL + Environment.NewLine);
                 songsList.Add(player.URL);
                 refreshPlaylist(songsList);
             }
@@ -181,6 +188,13 @@ namespace musicPlayer
             currentList = null;
             refreshPlaylist(playlists);
             player.Ctlcontrols.stop();
+            StreamWriter sw = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt");
+            foreach (var item in playlists)
+            {
+                sw.WriteLine(item);
+                this.Refresh();
+            }
+            sw.Close();
 
         }
         //selects a playlist
@@ -203,7 +217,7 @@ namespace musicPlayer
                 
                 if (playlistBox.SelectedItem != null)
                 {
-                    player.URL = files[playlistBox.SelectedIndex];
+                    player.URL = songsList[playlistBox.SelectedIndex];
                     player.Ctlcontrols.play();
 
                     try
@@ -239,6 +253,14 @@ namespace musicPlayer
                 files.Add(tempSong);
             }
             sr.Close();
+            StreamReader reader = new StreamReader(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt");
+            while (!reader.EndOfStream)
+            {
+                string templist = reader.ReadLine();
+                playlistBox.Items.Add(templist);
+                playlists.Add(templist);
+            }
+            reader.Close();
             volume.Value = 50;
         }
     }
