@@ -104,7 +104,7 @@ namespace musicPlayer
                 {
                     songBox.Items.Add(files[x]);
                 }
-                StreamWriter sw = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllSongs.txt", true);
+                StreamWriter sw = new StreamWriter(@"D:\GitHub\musicPlayer\PlayLists\AllSongs.txt", true);
                 for (int x = tempsize; x < files.Count; x++)
                 {
                     sw.WriteLine(files[x]);
@@ -138,13 +138,13 @@ namespace musicPlayer
         private void listButton_Click(object sender, EventArgs e)
         {
             string newPlaylist = Interaction.InputBox("Enter New Playlist Name", "Adding Playlist", "");
-            currentList = @"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\" + newPlaylist + ".txt";
+            currentList = @"D:\GitHub\musicPlayer\PlayLists\" + newPlaylist + ".txt";
             StreamWriter stream = new StreamWriter(currentList, true);
             this.Refresh();
             stream.Close();
             playlists.Add(currentList);
             refreshPlaylist(playlists);
-            StreamWriter streamWriter = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt", true);
+            StreamWriter streamWriter = new StreamWriter(@"D:\GitHub\musicPlayer\PlayLists\AllPlaylists.txt", true);
             streamWriter.WriteLine(currentList);
             this.Refresh();
             streamWriter.Close();
@@ -188,7 +188,7 @@ namespace musicPlayer
             currentList = null;
             refreshPlaylist(playlists);
             player.Ctlcontrols.stop();
-            StreamWriter sw = new StreamWriter(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt");
+            StreamWriter sw = new StreamWriter(@"D:\GitHub\musicPlayer\PlayLists\AllPlaylists.txt");
             foreach (var item in playlists)
             {
                 sw.WriteLine(item);
@@ -245,7 +245,7 @@ namespace musicPlayer
         //loads the song list upon opening the program
         private void window_Load(object sender, EventArgs e)
         {
-            StreamReader sr = new StreamReader(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllSongs.txt");
+            StreamReader sr = new StreamReader(@"D:\GitHub\musicPlayer\PlayLists\AllSongs.txt");
             while (!sr.EndOfStream)
             {
                 string tempSong = sr.ReadLine();
@@ -253,7 +253,7 @@ namespace musicPlayer
                 files.Add(tempSong);
             }
             sr.Close();
-            StreamReader reader = new StreamReader(@"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists\AllPlaylists.txt");
+            StreamReader reader = new StreamReader(@"D:\GitHub\musicPlayer\PlayLists\AllPlaylists.txt");
             while (!reader.EndOfStream)
             {
                 string templist = reader.ReadLine();
@@ -262,6 +262,15 @@ namespace musicPlayer
             }
             reader.Close();
             volume.Value = 50;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(player.playState==WMPLib.WMPPlayState.wmppsPlaying)
+            {
+                songProgress.Maximum = (int)player.Ctlcontrols.currentItem.duration;
+                songProgress.Value = (int)player.Ctlcontrols.currentPosition;
+            }
         }
     }
 }
