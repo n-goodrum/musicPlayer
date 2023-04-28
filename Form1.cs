@@ -18,7 +18,7 @@ namespace musicPlayer
         }
 
         //CHANGE THIS STRINGS TO EDIT FILE LOCATIONS
-        string folderLocation = @"D:\MTSU Repository\CSCI3037\musicPlayer\PlayLists";
+        string folderLocation = @"D:\MTSU Repository\CSCI3037\musicPlayer";
         //location of the folder that holds all data files called "PlayLists"
         //THIS CAN NOT BE AN EMPTY STRING, MUST ENTER A VALUE
 
@@ -109,7 +109,7 @@ namespace musicPlayer
                 {
                     songBox.Items.Add(files[x]);
                 }
-                StreamWriter sw = new StreamWriter(folderLocation+@"\AllSongs.txt", true);
+                StreamWriter sw = new StreamWriter(folderLocation+@"\PlayLists\AllSongs.txt", true);
                 for (int x = tempsize; x < files.Count; x++)
                 {
                     sw.WriteLine(files[x]);
@@ -143,13 +143,13 @@ namespace musicPlayer
         private void listButton_Click(object sender, EventArgs e)
         {
             string newPlaylist = Interaction.InputBox("Enter New Playlist Name", "Adding Playlist", "");
-            currentList = folderLocation+ @"\" + newPlaylist + ".txt";
+            currentList = folderLocation+ @"\PlayLists\" + newPlaylist + ".txt";
             StreamWriter stream = new StreamWriter(currentList, true);
             this.Refresh();
             stream.Close();
             playlists.Add(currentList);
             refreshPlaylist(playlists);
-            StreamWriter streamWriter = new StreamWriter(folderLocation + @"\AllPlaylists.txt", true);
+            StreamWriter streamWriter = new StreamWriter(folderLocation + @"\PlayLists\AllPlaylists.txt", true);
             streamWriter.WriteLine(currentList);
             this.Refresh();
             streamWriter.Close();
@@ -193,7 +193,7 @@ namespace musicPlayer
             currentList = null;
             refreshPlaylist(playlists);
             player.Ctlcontrols.stop();
-            StreamWriter sw = new StreamWriter(folderLocation + @"\AllPlaylists.txt");
+            StreamWriter sw = new StreamWriter(folderLocation + @"\PlayLists\AllPlaylists.txt");
             foreach (var item in playlists)
             {
                 sw.WriteLine(item);
@@ -250,7 +250,7 @@ namespace musicPlayer
         //loads the song list upon opening the program
         private void window_Load(object sender, EventArgs e)
         {
-            StreamReader sr = new StreamReader(folderLocation + @"\AllSongs.txt");
+            StreamReader sr = new StreamReader(folderLocation + @"\PlayLists\AllSongs.txt");
             while (!sr.EndOfStream)
             {
                 string tempSong = sr.ReadLine();
@@ -258,7 +258,7 @@ namespace musicPlayer
                 files.Add(tempSong);
             }
             sr.Close();
-            StreamReader reader = new StreamReader(folderLocation + @"\AllPlaylists.txt");
+            StreamReader reader = new StreamReader(folderLocation + @"\PlayLists\AllPlaylists.txt");
             while (!reader.EndOfStream)
             {
                 string templist = reader.ReadLine();
